@@ -2,13 +2,13 @@
 
 <div align="center">
 
-[![GitHub issues](https://img.shields.io/github/issues/atulguptag/Django-eCommerce-Website?color=pink&logo=github)](https://github.com/atulguptag/Django-eCommerce-Website/issues)
+[![GitHub issues](https://img.shields.io/github/issues/zephy0808/django-ecommerce-website?color=pink&logo=github)](https://github.com/zephy0808/django-ecommerce-website/issues)
 
-![GitHub forks](https://img.shields.io/github/forks/atulguptag/Django-eCommerce-Website?logo=git)
-![GitHub Repo stars](https://img.shields.io/github/stars/atulguptag/Django-eCommerce-Website)
-[![Contributors](https://img.shields.io/github/contributors/atulguptag/Django-eCommerce-Website?style=plastic&?color=2b9348)](https://github.com/atulguptag/Django-eCommerce-Website/contributors)
+![GitHub forks](https://img.shields.io/github/forks/zephy0808/django-ecommerce-website?logo=git)
+![GitHub Repo stars](https://img.shields.io/github/stars/zephy0808/django-ecommerce-website)
+[![Contributors](https://img.shields.io/github/contributors/zephy0808/django-ecommerce-website?style=plastic&?color=2b9348)](https://github.com/zephy0808/django-ecommerce-website/contributors)
 [![Access Here](https://img.shields.io/badge/Access-Here-brightgreen?style=plastic)](https://djangoecommercewebsite.pythonanywhere.com/)
-![GitHub License](https://img.shields.io/github/license/atulguptag/Django-eCommerce-Website?style=plastic&link=https%3A%2F%2Fgithub.com%2Fatulguptag%2FDjango-eCommerce-Website%2Fblob%2Fmain%2FLICENSE)
+![GitHub License](https://img.shields.io/github/license/zephy0808/django-ecommerce-website?style=plastic&link=https%3A%2F%2Fgithub.com%2Fzephy0808%2Fdjango-ecommerce-website%2Fblob%2Fmain%2FLICENSE)
 
 </div>
 
@@ -32,6 +32,7 @@ This project is a full-fledged eCommerce website built using Django, a high-leve
 - **Checkout Process:** Smooth checkout flow with order summary and address management.
 - **Payment Integration:** Integrated with Razorpay for secure online payments.
 - **Order Management:** View order history and status updates.
+- **Social Authentication:** Login with Google and Facebook accounts.
 - **Responsive Design:** Mobile-friendly UI ensuring a consistent experience across devices.
 - **Admin Panel:** Manage products, orders, and users efficiently through Django's admin interface.
 
@@ -107,6 +108,9 @@ This project is a full-fledged eCommerce website built using Django, a high-leve
 - **HTML/CSS/JavaScript:** Frontend development for a responsive and interactive UI.
 - **Razorpay API:** Payment gateway integration for secure transactions.
 - **Bootstrap:** Frontend framework for responsive design and UI components.
+- **Django Allauth:** Social authentication integration for Google and Facebook.
+- **Django Countries:** Country field for forms and models.
+- **Crispy Forms:** Enhanced form rendering with Bootstrap styling.
 
 ## Setup Instructions
 
@@ -115,14 +119,15 @@ To run this project locally, follow these steps:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/atulguptag/Django-eCommerce-Website.git
-   cd Django-eCommerce-Website
+   git clone https://github.com/zephy0808/django-ecommerce-website.git
+   cd django-ecommerce-website
    ```
 
 2. **Create a virtual environment:**
    ```bash
    python -m venv venv
    ```
+
 3. **Activate the virtual environment:**
 
    - On Windows:
@@ -139,26 +144,30 @@ To run this project locally, follow these steps:
    pip install -r requirements.txt
    ```
 
-### `Note`: Before running `python manage.py migrate`, first create `.env` file in your project root, and update it with the same as `.env.example`
+### Environment Configuration
 
-- Then, add `SECRET_KEY` and `DEBUG=True` in `.env` file -
+Before running `python manage.py migrate`, create a `.env` file in your project root directory and configure it with the following variables:
 
-- **How to generate/get the SECRET_KEY?**
+```env
+SECRET_KEY=your_secret_key_here
+DEBUG=True
+SOCIAL_AUTH_FACEBOOK_KEY=your_facebook_app_key
+SOCIAL_AUTH_FACEBOOK_SECRET=your_facebook_app_secret
+```
 
-- Open your terminal (make sure your virtual environment is activated, it should be something like this - `(venv) PS C:\Users\asus\Django-eCommerce-Website`)
+**How to generate the SECRET_KEY:**
 
-- then type `django-admin shell`, and hit enter.
-
-- Paste the below code into your shell (use mouse right side button to paste the copied code, `as Ctrl+V may not work`)-
-
-  ```bash
-  from django.core.management.utils import get_random_secret_key
-  get_random_secret_key()
-  ```
-
-* Copy the `SECRET_KEY`(whatever you got in the output), and paste it in your `.env` file after `SECRET_KEY=`.
-
-* Now, you are good to go :) -
+1. Open your terminal (ensure your virtual environment is activated)
+2. Run the Django shell:
+   ```bash
+   python manage.py shell
+   ```
+3. Generate a secret key:
+   ```python
+   from django.core.management.utils import get_random_secret_key
+   print(get_random_secret_key())
+   ```
+4. Copy the generated key and add it to your `.env` file
 
 5. **Apply database migrations:**
 
@@ -183,31 +192,66 @@ To run this project locally, follow these steps:
    http://127.0.0.1:8000/
    ```
 
-### `Note`: After you navigate to the above url (`http://127.0.0.1:8000/`), and when you try to navigate to the login, signup, or any page which requires login, then you'll see an error coming from the Social Account Model. If you don't want to add google auth functionality in your project, you can simply remove all social account related things in the code. In case, if you want to proceed with the default, then here's how you can fix that error -
+### Social Authentication Setup
 
-- Follow this step: navigate to `http://127.0.0.1:8000/admin/`, enter your `username and password` which you used to create in `Step no: 6`
-- then follow this screenshot for better understanding :) -
+After navigating to the application, if you encounter errors related to social authentication:
 
-- ![Social Application Screenshot](Screenshots/google_auth-Change-social-application-Django-site-admin.png)
+1. Navigate to the admin panel: `http://127.0.0.1:8000/admin/`
+2. Login with your superuser credentials
+3. Go to **Sites** → **Social Applications**
+4. Add your Google and Facebook app credentials:
+   - **Google:** Add your Google Client ID and Secret
+   - **Facebook:** Add your Facebook App ID and Secret
 
-- Simply, put your Google Client Id and Secret Id in those two places which I highlighted.
-
-- Now, you are ready to rock 🎉🤘🏻
+![Social Application Screenshot](Screenshots/google_auth-Change-social-application-Django-site-admin.png)
 
 ## Usage
 
 - **Admin Panel:** Access the admin panel at `http://127.0.0.1:8000/admin/` to manage products, orders, and users.
 - **Shopping:** Browse products, add items to the cart, proceed to checkout, and make payments using Razorpay.
-- **Profile:** Users can register, login, reset their password, view their order history, and update their profiles.
+- **Profile Management:** Users can register, login, reset passwords, view order history, and update their profiles.
+- **Social Login:** Users can authenticate using their Google or Facebook accounts.
+
+## Project Structure
+
+```
+django-ecommerce-website/
+├── ecomm/                 # Main project directory
+│   ├── settings.py        # Django settings
+│   ├── urls.py           # URL configuration
+│   ├── wsgi.py           # WSGI configuration
+│   └── asgi.py           # ASGI configuration
+├── accounts/             # User authentication and profile management
+├── products/             # Product catalog and management
+├── home/                 # Home page and general views
+├── templates/            # HTML templates
+├── static/              # Static files (CSS, JS, images)
+├── Screenshots/         # Application screenshots
+├── requirements.txt     # Python dependencies
+├── manage.py           # Django management script
+└── README.md           # Project documentation
+```
 
 ## Contributing
 
-Contributions are welcome! Please fork this repository and create a pull request with your proposed features, enhancements, or bug fixes.
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
 
-## 💰 You can help me by Donating. Any small amount will help me to create more projects like this in future 😀. Otherwise, it is not necessary.
+## Support
 
-[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/atulguptaa)
+If you find this project helpful, consider giving it a ⭐ on GitHub!
+
+## 💰 Support the Developer
+
+You can help support the development of more projects like this:
+
+[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/zephy0808)
